@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Design Pattern | Publisher Subscriber Pattern</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script type="text/javascript" src="pubsub.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <script type="text/javascript">
+            var testSubscriber = function( topics , data ){
+                console.log( topics + ": " + data );
+            };
+            var testSubscription = pubsubz.subscribe( 'example1', testSubscriber );
+            pubsubz.publish( 'example1', 'hello world!' );
+            pubsubz.publish( 'example1', ['test','a','b','c'] );
+            pubsubz.publish( 'example1', [{'color':'blue'},{'text':'hello'}] );
+            setTimeout(function(){
+                pubsubz.unsubscribe( testSubscription );
+            }, 0);
+            
+            pubsubz.publish( 'example1', 'hello again!' );
+            
+        </script>
+        <p>
+            <h1>pubsubz Test</h1>
+            <p>
+                Run with Firebug or a console simulator open.
+            </p>
+        </p>
+    </body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Design Pattern | Facade Pattern</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <pre>
+            In this example, calling module.facade() will actually trigger a set of private behavior
+            within the module, but again, the user isn't concerned with this. we've made it much easier
+            for them to consume a feature without needing to worry about implementation-level details.
+        </pre>
+        <script>
+        var module = (function(){
+            var _private = {
+                i:5,
+                get: function(){
+                    console.log("Current Value : " + this.i);
+                },
+                set: function(value){
+                    this.i = value || this.i;
+                },
+                run:function(){
+                    console.log("Running");
+                },
+                jump:function(){
+                    console.log("Jumping");
+                }
+            };
+            return{
+                facade: function(args){
+                    _private.set(args.value);
+                    _private.get();
+                    if(args.run){
+                        _private.run();
+                    }
+                    if(args.jump){
+                        _private.jump();
+                    }
+                    if(!args.run && !args.jump){
+                        console.log("Stable");
+                    }
+                }
+            };
+        })();
+
+
+        //
+        module.facade({run:true,value:10});
+        module.facade({run:false,jump:true});
+        module.facade({run:true,jump:true,value:120});
+        module.facade({run:false,jump:false,value:120});
+        </script>
+    </body>
+</html>

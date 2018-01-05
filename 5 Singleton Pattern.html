@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Disign Pattern | Singleton Pattern</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <script>
+        var SingletonTester = (function(){
+
+            function Singleton(options){
+
+                // set options to the options supplied
+                // or an empty object if none are provided
+                options = options || {};
+                
+                // set some properties for our singleton
+                this.name = "Signleton pattern demo";
+                this.pointX = options.pointX || 6;
+                this.pointY = options.pointY || 10;
+            }
+
+            // our instance holder
+            var instance;
+
+            // an emulation static variables and method
+           var _static = {
+                name : "Singleton Tester",
+
+                // method for getting  an instance it return singleton instance of singleton object
+                getInstance:function(options){
+                    if(instance === undefined){
+                        instance = new Singleton(options);
+                    }
+                    return instance;
+                }
+            };
+
+            return _static;
+        })();
+
+
+        var singletonTest = SingletonTester.getInstance({
+            pointX: 15
+        });
+
+        //console.log(singletonTest);
+        console.log(singletonTest.pointX);
+
+        // below creation of object has no effect
+        var singletonTest1 = SingletonTester.getInstance({
+            pointX: 55,
+            pointY:20
+        });
+
+        //console.log(singletonTest1);
+        console.log(singletonTest1.pointX); // print 15 only
+        console.log(singletonTest1.pointY); 
+        </script>
+    </body>
+</html>

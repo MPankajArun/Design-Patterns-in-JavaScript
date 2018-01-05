@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Design Patterns | Constructor Pattern</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <script>
+        function car(model, year, miles){
+            this.model = model;
+            this.year = year;
+            this.miles = miles;
+
+            // toString() are redefined for each of the new objects created using the Car constructor 
+            this.toString = function(){
+                return  this.model + " car has purchased in year " + this.year + " with total running as " + this.miles + " Miles.";
+            }
+        }
+
+        // creating new instance of the car
+        var car1 = new car("Honda",1992,3500);
+        var car2 = new car("Ford",1993,5500);
+
+        console.log(car1.toString());
+        console.log(car2);
+        </script>
+    </body>
+</html>

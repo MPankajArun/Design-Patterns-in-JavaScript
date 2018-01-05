@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Design Patterns | Revealing Module Pattern</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <script>
+        var greetModule = (function(){
+            var privateVar = "Jhutan Debnath",
+                publicVar = "Hey there, ";
+            
+            function privateFunction(){
+                console.log("Name: "+ privateVar);
+                //return privateVar;
+            }
+
+            function publicSetName(name){
+                privateVar = name;
+            }
+
+            function publicGetName(){
+                privateFunction();
+            }
+
+            // Reveal public pointers to private functions and properties
+            return {
+                setName: publicSetName,
+                greeting:publicVar,
+                getName:publicGetName
+
+            };
+        })();
+
+        greetModule.setName("Saddam Hussain");
+        console.log(greetModule.greeting);
+        greetModule.getName();
+        
+        </script>
+    </body>
+</html>

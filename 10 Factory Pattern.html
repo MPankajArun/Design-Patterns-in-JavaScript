@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Design Pattern | Factory Pattern</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <script>
+        // constructor for defining new cars
+        function Car(options){
+            this.doors = options.doors || 4;
+            this.state = options.state || "Used";
+            this.color = options.color || "White";
+        }
+
+        // contructor for defnining new trucks
+        function Truck(options){
+            this.state = options.state || "New";
+            this.color = options.color || "red";
+            this.wheels = options.wheeles || 32;
+        }
+
+        // skeleton for vehicle factory
+        function VehicleFactory(){} 
+
+        // Define the prototypes and utilities for this factory
+        
+        // Our default vehicleClass is Car
+        VehicleFactory.prototype.vehicleClass = Car;
+
+        // factory method for creating new instance of a vehicle
+        VehicleFactory.prototype.createNewVehicle = function(options){
+            switch(options.vehicleType){
+                case "car":
+                    this.vehicleClass = Car;
+                    break;
+                case "Truck":
+                    this.vehicleClass = Truck;
+                    break;
+            }
+            return new this.vehicleClass(options);
+        };
+
+        // create an instance of our factory that makes car
+        var carFactory = new VehicleFactory();
+        var car = carFactory.createNewVehicle({
+            vehicleType: "Car",
+            color:"Yellow",
+            doors:6
+        });
+
+        // Test to confirm our car was created using the vehicleClass/prototype Car
+        console.log(car instanceof Car);
+        console.log(car);
+
+
+        var movingTruck = carFactory.createNewVehicle( {
+                      vehicleType: "Truck",
+                      state: "like new",
+                      color: "red",
+                      wheelSize: "small" } );
+ 
+        // Test to confirm our truck was created with the vehicleClass/prototype Truck
+        
+        // Outputs: true
+        console.log( movingTruck instanceof Truck );
+        
+        // Outputs: Truck object of color "red", a "like new" state
+        // and a "small" wheelSize
+        console.log( movingTruck );
+        </script>
+    </body>
+</html>

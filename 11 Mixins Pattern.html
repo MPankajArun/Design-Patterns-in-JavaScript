@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Design Pattern | Mixins Pattern</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+        code {
+            padding: 2px 4px;
+            color: #D14;
+            background-color: #F7F7F9;
+            border: 1px solid #E1E1E8;
+            font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+            font-size: 12px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+        }
+        </style>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <pre>
+
+            In the next example, we have two constructors: a Car and a Mixin. What we're going to do is 
+            augment (another way of saying extend) the Car so that it can inherit specific methods defined
+            in the Mixin, namely <code>driveForward()</code> and <code>driveBackward()</code>. 
+        </pre>
+        <script>
+        // define a simple Car constructor
+        var Car = function(settings){
+            this.model = settings.model || "Model not defined";
+            this.color = settings.color || "Color not defined";
+        };
+
+        // define a Mixin
+        var Mixin = function(){};
+
+        Mixin.prototype = {
+            driveForward: function(){
+                console.log("Driving forward");
+            },
+            driveBackward: function(){
+                console.log("Driving backward");
+            },
+            driveSideways: function(){
+                console.log("Driving sideways");
+            }
+        };
+
+
+        // Extend and existing class with a method from another
+        function augment(receivingClass, givingClass){
+            
+            // only provide certain methods
+            if(arguments[2]){
+                for(var i=2,len= arguments.length;i<len;i++){
+                    receivingClass.prototype[arguments[i]] = givingClass.prototype[arguments[i]];
+                }
+            }else{  // provide all methods
+                for(var methodName in givingClass.prototype){
+                    // check to make sure the receiving class doesnt have 
+                    // a method of the same name as the one currently being processed
+                    if(!Object.hasOwnProperty.call(receivingClass.prototype, methodName)){
+                        receivingClass.prototype[methodName] = givingClass.prototype[methodName];
+                    }
+                }
+            }
+        } // end of augment
+
+        // Augment the Car constructor to include "driveForward" and "driveBackward"
+        augment(Car,Mixin,"driveForward","driveBackward");
+
+        // create a new car
+        var myCar = new Car({
+            model: "Honda",
+            color: "Green"
+        });
+
+        // Test to make sure we now have access to the methods
+        myCar.driveForward();
+        myCar.driveBackward();
+
+        // We can also augment Car to include all functions from our mixin
+        // by not explicitly listing a selection of them
+        augment( Car, Mixin );
+        
+        var mySportsCar = new Car({
+            model: "Porsche",
+            color: "red"
+        });
+        
+        mySportsCar.driveSideways();
+
+        </script>
+    </body>
+</html>

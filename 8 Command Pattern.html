@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Design Pattern | Command Pattern</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <script>
+        (function(){
+ 
+             carManager = {
+            
+                // request information
+                requestInfo: function( model, id ){
+                return "The information for " + model + " with ID " + id + " is Available";
+                },
+            
+                // purchase the car
+                buyVehicle: function( model, id ){
+                return "You have successfully purchased Item " + id + ", a " + model;
+                },
+            
+                // arrange a viewing
+                arrangeViewing: function( model, id ){
+                return "You have successfully booked a viewing of " + model + " ( " + id + " ) ";
+                }
+            
+            };
+            
+        })();
+
+        
+        carManager.execute = function (name) {
+            return carManager[name] && carManager[name].apply( carManager, [].slice.call(arguments, 1) );
+        };
+
+        
+        console.log(carManager.execute( "arrangeViewing", "Ferrari", "14523" ));
+        console.log(carManager.execute( "requestInfo", "Ford Mondeo", "54323" ));
+        console.log(carManager.execute( "requestInfo", "Ford Escort", "34232" ));
+        console.log(carManager.execute( "buyVehicle", "Ford Escort", "34232" ));
+        </script>
+    </body>
+</html>

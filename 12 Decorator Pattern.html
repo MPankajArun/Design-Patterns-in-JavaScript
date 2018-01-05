@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Design Pattern | Decorator Pattern</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <script>
+        var Vehicle = function(vehicleType){
+            this.vehicleType = vehicleType || "Car";
+            this.model = "Default";
+            this.price = 250000;
+        };
+
+        // create a instance of a Vehicle
+        var myCar = new Vehicle("Car");
+        console.log(myCar);
+
+        var myTruck = new Vehicle("Truck");
+        console.log(myTruck);
+        myTruck.setModel = function(modelName){
+            this.model = modelName;
+        };
+
+        myTruck.setPrice = function(price){
+            this.price = price;
+        };
+
+        myTruck.setModel("Large");
+        myTruck.setPrice(234323);
+        console.log(myTruck);
+        </script>
+    </body>
+</html>

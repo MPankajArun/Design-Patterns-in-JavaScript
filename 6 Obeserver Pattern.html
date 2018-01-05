@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Design Pattern | Observer Pattern</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <pre>
+                In our sample application using the above Observer components, we now define:
+                
+                A button for adding new observable checkboxes to the page
+                A control checkbox which will act as a subject, notifying other checkboxes they should be checked
+                A container for the new checkboxes being added
+
+        </pre><br />
+        <button id="addNewObserver">Add New Observer checkbox</button>
+        <input id="mainCheckbox" type="checkbox"/>
+        <div id="observersContainer"></div>
+        <script>
+
+            // the list of dependent Observers a subject may have
+            function ObserverList(){
+                this.observerList = [];
+            }
+
+            ObserverList.prototype.add = function(obj){
+                return this.observerList.push(obj);
+            };
+            ObserverList.prototype.getCount = function(){
+                return this.observerList.length;
+            };
+            ObserverList.prototype.get = function(index){
+                if(index > -1 && index < this.ObserverList.length){
+                    return this.observerList[index];
+                }
+            };
+            ObserverList.prototype.indexOf = function(obj, startIndex){
+                var i = startIndex;
+                while(i < this.observerList.length){
+                    if(this.observerList[i] === obj){
+                        return i;
+                    }
+                    i++;
+                }
+                return -1;
+            };
+            ObserverList.prototype.removeAt = function(index){
+                return this.observerList.splice(index,1);
+            };
+
+
+            // model the Subject and the ability to add, remove or notify observers on the observer list
+            function Subject(){
+                this.observers=new  ObserverList();
+            }
+            Subject.prototype.addObserver = function(observer){
+                this.observers.add(observer);
+            };
+            Subject.prototype.removeObserver = function(observer){
+                this.observers.removeAt(this.observers.indexOf(observer,0));
+            }
+            Subject.prototype.notify = function(context){
+                var observerCount = this.observers.getCount();
+                for(var i = 0;i<observerCount;i++){
+                    this.observers.get(i).update(context);
+                }
+            }
+
+
+            // a skeleton for creating new Observers
+            function Observer(){
+                this.update = function(){
+                    //
+                    //alert("Updated");
+                };
+            }
+
+
+            // Extent an Object with an extension
+            function extend(obj, extension){
+                for(var key in extension){
+                    obj[key] = extension[key];
+                }
+            }
+
+
+            // reference to DOM Elements
+            var controlCheckBox = document.getElementById("mainCheckBox"),
+                addBtn = document.getElementById("addNewObserver"),
+                container = document.getElementById("observersContainer");
+            
+            // concrete Subject
+            // Extent the controlling checkbox with Subject class
+            extend(controlCheckBox, new Subject());
+
+            // clicking  the checkbox  will trigger the notifications to is observers
+            controlCheckBox.onclick = function(){
+                controlCheckBox.notify(controlCheckBox.checked);
+            };
+
+            addBtn.onclick = addNewObserver;
+
+            // Concrete Observer
+            function addNewObserver(){
+                // create a new checkbox to be added
+                var check = document.createElement("input");
+                check.type = "checkbox";
+
+                // extend the checkbox with new Observer
+                extend(check, new Observer());
+
+                // override with the custome behaviour
+                check.update = function(value){
+                    this.checked = value;
+                };
+
+                // add new Oberver to  our list of observers
+                // for our main subject
+                controlCheckBox.addNewObserver(check);
+
+                // append the item to the container
+                container.appendChild(check);
+            }
+
+
+        </script>
+    </body>
+</html>

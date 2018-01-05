@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Design Patterns | Module Pattern</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <script>
+
+            // IIFE function
+            var basketModule = (function(){
+                // private data
+                var basket = [];
+                function doSomethingPrivate(){
+                    //
+                }
+
+                // return an object exposed to public
+                return{
+                    // add item to basket
+                    addItem: function(item){
+                        basket.push(item);
+                    },
+
+                    // get the number of items in basket
+                    getItemCount: function(){
+                        return basket.length;
+                    },
+
+                    // get the total value of items in basket
+                    getTotalValue: function(){
+                        var len = this.getItemCount(),
+                            sum = 0;
+                        while(len--){
+                            sum += basket[len].price;
+                        }
+                        return sum;
+                    }
+                }
+            })();
+
+
+            // basketModule return an object with a public API 
+            basketModule.addItem({
+                item: "Notebook",
+                price: 440
+            });
+
+            basketModule.addItem({
+                item:"Mouse",
+                price: 540
+            });
+
+            console.log("Total Items : " + basketModule.getItemCount());
+            console.log("Total price : " + basketModule.getTotalValue());
+
+            console.log(basketModule.basket);   //  return undefined
+            console.log(basket);                // ERROR
+        </script>
+    </body>
+</html>
